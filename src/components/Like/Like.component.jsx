@@ -8,11 +8,11 @@ class Like extends Component {
         else this.setState({className : 'fa fa-heart-o' })
     }
     render() {
-        const {liked, handleLike, _id} = this.props
+        const {liked, handleLike} = this.props
         let classes = "fa fa-lg fa-heart"
         if(!liked) classes += '-o'
         return (
-            <i className={classes} onClick={() => handleLike(_id,liked)}></i>
+            <i className={classes} onClick={() => handleLike(this.props.movie)}></i>
          );
     }
 }

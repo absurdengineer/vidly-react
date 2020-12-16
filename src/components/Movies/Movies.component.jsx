@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import { getMovies } from "../../services/fakeMovieService"
-import Like from'../Like/Like.component'
+import MovieItem from "../MovieItem/MovieItem.component";
 import Pagination from "../Pagination/Pagination.component";
+import {paginate} from '../Pagination/paginate.utils'
 
 class Movies extends Component {
   state = {
@@ -27,9 +28,9 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies
-    const {currentPage, movies, pageSize } = this.state
+    const {currentPage, pageSize, movies : allMovies } = this.state
     if (!count) return <h4>There are no movies in the database.</h4>
-
+    const movies =  paginate(allMovies, currentPage, pageSize)
     return (
       <React.Fragment>
         <h4>Showing {count} movies in the database.</h4>
@@ -40,26 +41,13 @@ class Movies extends Component {
               <th>Genre</th>
               <th>Stock</th>
               <th>Rate</th>
-              <th />
+              <th>Like</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {movies.map(movie => (
-              <tr key={movie._id}>
-                <td>{movie.title}</td>
-                <td>{movie.genre.name}</td>
-                <td>{movie.numberInStock}</td>
-                <td>{movie.dailyRentalRate}</td>
-                <td style={{cursor: 'pointer'}}><Like liked={movie.liked} handleLike={() => this.handleLike(movie)}/></td>
-                <td>
-                  <button
-                    onClick={() => this.handleDelete(movie)}
-                    className="btn btn-danger"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
+              <MovieItem key={movie._id} movie={movie} handleLike={this.handleLike} handleDelete={this.handleDelete} />
             ))}
           </tbody>
         </table>
