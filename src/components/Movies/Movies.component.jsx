@@ -35,14 +35,9 @@ class Movies extends Component {
     this.setState({currentGenre : genre})
     this.setState({currentPage : 1})
   }
-  handleSort = path => {
-    let sortColumn = {...this.state.sortColumn}
-    if(sortColumn.path === path)
-      sortColumn.order = sortColumn.order === 'asc' ? 'desc' : 'asc'
-    else 
-      sortColumn = { path, order : 'asc'}
+  handleSort = sortColumn => {
     this.setState({sortColumn})
-    } 
+  }
   componentDidMount() {
     this.setState({
       movies : getMovies(), 
@@ -71,6 +66,7 @@ class Movies extends Component {
           <h4>Showing {filtered.length} movies in the database.</h4>
           <MovieTable 
             movies={movies} 
+            sortColumn={sortColumn}
             handleLike={this.handleLike} 
             handleDelete={this.handleDelete} 
             handleSort={this.handleSort} 
