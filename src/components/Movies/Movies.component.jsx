@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 import { getMovies } from "../../services/fakeMovieService"
-import MovieItem from "../MovieItem/MovieItem.component";
 import Pagination from "../Pagination/Pagination.component";
 import {paginate} from '../Pagination/paginate.utils'
 import Genres from "../Genres/Genres.component";
 import { getGenres } from "../../services/fakeGenreService";
+import MovieTable from "../MovieTable/MovieTabe.component";
 
 class Movies extends Component {
   state = {
@@ -46,6 +46,7 @@ class Movies extends Component {
     if (!count) return <h4>There are no movies in the database.</h4>
     const filtered = currentGenre ? allMovies.filter(m => m.genre._id === currentGenre._id) : allMovies
     const movies =  paginate(filtered, currentPage, pageSize)
+    
     return (
       <div className="row">
         <div className="col-3">
@@ -57,24 +58,17 @@ class Movies extends Component {
         </div>
         <div className="col">
           <h4>Showing {filtered.length} movies in the database.</h4>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Stock</th>
-                <th>Rate</th>
-                <th>Like</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {movies.map(movie => (
-                <MovieItem key={movie._id} movie={movie} handleLike={this.handleLike} handleDelete={this.handleDelete} />
-              ))}
-            </tbody>
-          </table>
-          <Pagination itemCount={filtered.length} currentPage={currentPage} pageSize={pageSize} onPageChange={this.handlePageChange} />
+          <MovieTable 
+            movies={movies} 
+            handleLike={this.handleLike} 
+            handleDelete={this.handleDelete} 
+          />
+          <Pagination 
+            itemCount={filtered.length} 
+            currentPage={currentPage} 
+            pageSize={pageSize} 
+            onPageChange={this.handlePageChange} 
+          />
         </div>
       </div>
     );
