@@ -1,10 +1,11 @@
 import React, { Component } from "react"
+import _ from 'lodash'
 import { getMovies } from "../../services/fakeMovieService"
-import Pagination from "../Pagination/Pagination.component";
+import Pagination from "../Pagination/Pagination.component"
 import {paginate} from '../Pagination/paginate.utils'
 import Genres from "../Genres/Genres.component";
-import { getGenres } from "../../services/fakeGenreService";
-import MovieTable from "../MovieTable/MovieTabe.component";
+import { getGenres } from "../../services/fakeGenreService"
+import MovieTable from "../MovieTable/MovieTabe.component"
 
 class Movies extends Component {
   state = {
@@ -12,7 +13,8 @@ class Movies extends Component {
     genres : [],
     pageSize : 4,
     currentPage : 1,
-    currentGenre : ''
+    currentGenre : '',
+    sortColumn : {path : 'title', order : 'asc'}
   };
 
   handleDelete = movie => {
@@ -33,6 +35,14 @@ class Movies extends Component {
     this.setState({currentGenre : genre})
     this.setState({currentPage : 1})
   }
+  handleSort = path => {
+    let sortColumn = {...this.state.sortColumn}
+    if(sortColumn.path === path)
+      sortColumn.order = sortColumn.order === 'asc' ? 'desc' : 'asc'
+    else 
+      sortColumn = { path, order : 'asc'}
+    this.setState({sortColumn})
+    } 
   componentDidMount() {
     this.setState({
       movies : getMovies(), 
@@ -42,10 +52,11 @@ class Movies extends Component {
 
   render() {
     const { length: count } = this.state.movies
-    const {currentPage, currentGenre, pageSize, genres, movies : allMovies } = this.state
+    const {currentPage, currentGenre, pageSize, genres, sortColumn, movies : allMovies } = this.state
     if (!count) return <h4>There are no movies in the database.</h4>
     const filtered = currentGenre ? allMovies.filter(m => m.genre._id === currentGenre._id) : allMovies
-    const movies =  paginate(filtered, currentPage, pageSize)
+    const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
+    const movies =  paginate(sorted, currentPage, pageSize)
     
     return (
       <div className="row">
@@ -62,6 +73,7 @@ class Movies extends Component {
             movies={movies} 
             handleLike={this.handleLike} 
             handleDelete={this.handleDelete} 
+            handleSort={this.handleSort} 
           />
           <Pagination 
             itemCount={filtered.length} 
