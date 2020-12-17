@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
-import TableBody from '../TableBody/TableBody.component';
-import TableHeader from '../TableHeader/TablleHeader.component';
 import Button from '../Button/Button.component'
 import Like from '../Like/Like.component'
+import Table from '../Table/Table.component';
 
 class MovieTable extends Component {
     columns = [
@@ -24,21 +23,15 @@ class MovieTable extends Component {
     ] 
 
     render() { 
-        const {movies, handleLike, handleDelete, sortColumn, handleSort} = this.props
+        const {movies, sortColumn, handleSort} = this.props
         return ( 
-            <table className="table">
-                <TableHeader 
+                <Table 
                     columns={this.columns} 
                     sortColumn={sortColumn} 
                     handleSort={handleSort} 
+                    data={movies}
                 />
-                <TableBody
-                    columns={this.columns} 
-                    data={movies} 
-                    handleLike={handleLike} 
-                    handleDelete={handleDelete} 
-                />
-            </table>
+
         );
     }
 }
