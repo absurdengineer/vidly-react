@@ -1,9 +1,8 @@
 import React from 'react'
 
-const Button = props => {
-    const {...otherProps} = props
+const Button = ({children, ...otherProps}) => {
     return ( 
-        <button {...otherProps}>{props.children}</button>
+        <button {...otherProps}>{children}</button>
      );
 }
 
