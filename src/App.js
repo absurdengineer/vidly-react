@@ -1,18 +1,22 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import Movies from './components/Movies/Movies.component'
+import Movies from './pages/Movies/Movies.component'
 import NavBar from './components/NavBar/NavBar.component'
 import NotFound from './components/NotFound/NotFound.component'
 import Customer from './pages/Customer/Customer.page'
 import Rental from './pages/Rental/Rental.page'
 import './App.css'
+import MovieForm from './components/MovieForm/MovieForm.component'
+import LoginForm from './components/LoginForm/LoginForm.component'
 
 const App = () => {
   return ( 
     <React.Fragment >
       <NavBar />
-      <main className="container">
+      <main className="container pt-5">
         <Switch>
+          <Route path='/login' component={LoginForm} />
+          <Route path='/movies/:id' component={MovieForm} />
           <Route path='/movies' component={Movies} />
           <Route path='/customers' component={Customer} />
           <Route path='/rentals' component={Rental} />
