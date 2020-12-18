@@ -9,7 +9,6 @@ class LoginForm extends Component {
             password : ''
         } 
     }
-
     handleChange = (e) => {
         const {name, value} = e.target
         const account = {...this.state.account}
@@ -18,7 +17,7 @@ class LoginForm extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault()
-
+        this.setState({account : {username : '', password : '' }})
         console.log('Submitted!!!!')
     }
 
@@ -28,14 +27,8 @@ class LoginForm extends Component {
             <div>
                 <h1>Login</h1>
                 <form onSubmit={this.handleSubmit}>
-                    <div className="form-group">
-                        <label htmlFor="username">Username</label>
-                        <Input autoFocus type="text" id='username' name='username' className="form-control" value={username} handleChange={this.handleChange}/>
-                    </div>
-                    <div className="form-group">
-                        <label htmlFor="password">Password</label>
-                        <Input type="password" id='password' name='password' className="form-control" value={password} handleChange={this.handleChange}/>
-                    </div>
+                    <Input autoFocus type='text' value={username} name='username' label='Username' handleChange={this.handleChange} />
+                    <Input type='password' value={password} name='password' label='Password' handleChange={this.handleChange} />
                     <Button className='btn btn-primary btn-lg'>Login</Button>
                 </form>
             </div>

@@ -1,9 +1,11 @@
 import React from 'react'
 
-const Input = props => {
-    const {handleChange, ...otherProps} = props
+const Input = ({handleChange, label, name, ...otherProps}) => {
     return (
-        <input {...otherProps} onChange={props.handleChange}/>
+        <div className="form-group">
+            <label htmlFor={name}>{label}</label>
+            <input type="text" id={name} name={name} {...otherProps} className="form-control" onChange={handleChange}/>
+        </div>
      );
 }
 
