@@ -8,9 +8,9 @@ class Form extends Component {
         errors : {}
     }
     validate = () => {
-        const {username, password} = this.state.data
+        const {...inputValues} = this.state.data
         const options = {abortEarly : false }
-        const {error} = Joi.validate({username, password}, this.schema, options)
+        const {error} = Joi.validate({...inputValues}, this.schema, options)
         if(!error) return null
         const errors = {} 
         for(let item of error.details)

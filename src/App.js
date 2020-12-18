@@ -5,9 +5,10 @@ import NavBar from './components/NavBar/NavBar.component'
 import NotFound from './components/NotFound/NotFound.component'
 import Customer from './pages/Customer/Customer.page'
 import Rental from './pages/Rental/Rental.page'
-import './App.css'
 import MovieForm from './components/MovieForm/MovieForm.component'
 import LoginForm from './components/LoginForm/LoginForm.component'
+import RegisterForm from './components/RegisterForm/RegisterForm.component'
+import './App.css'
 
 const App = () => {
   return ( 
@@ -16,6 +17,7 @@ const App = () => {
       <main className="container pt-5">
         <Switch>
           <Route path='/login' component={LoginForm} />
+          <Route path='/register' component={RegisterForm} />
           <Route path='/movies/:id' component={MovieForm} />
           <Route path='/movies' component={Movies} />
           <Route path='/customers' component={Customer} />
