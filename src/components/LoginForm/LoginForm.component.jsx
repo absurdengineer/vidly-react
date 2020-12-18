@@ -26,12 +26,12 @@ class LoginForm extends Component {
         return errors
     }
     validateProperty = ({name, value}) => {
-        if(name === 'username') {
-            if(value.trim() === '') return 'Username is required.'
+        const obj = {
+            [name] : value
         }
-        if(name === 'password') {
-            if(value.trim() === '') return 'Password is required.'
-        }
+        const schema = { [name] : this.schema[name] }
+        const {error} = Joi.validate(obj, schema)
+        return !error ? null : error.details[0].message
     }
     handleChange = (e) => {
         const {name, value} = e.target
@@ -62,7 +62,7 @@ class LoginForm extends Component {
                 <form onSubmit={this.handleSubmit}>
                     <Input autoFocus type='text' error={errors.username} value={username} name='username' label='Username' handleChange={this.handleChange} />
                     <Input type='password' error={errors.password} value={password} name='password' label='Password' handleChange={this.handleChange} />
-                    <Button className='btn btn-primary btn-lg'>Login</Button>
+                    <Button disabled={this.validate()} className='btn btn-primary btn-lg'>Login</Button>
                 </form>
             </div>
          );
