@@ -9,7 +9,7 @@ const Genres = ({genres, onItemSelect, currentGenre}) => {
         >All Genres</p>
             {genres.map((genre) => 
                 <GenreItem 
-                    key={genre._id} 
+                    key={genre.id} 
                     currentGenre={currentGenre} 
                     genre={genre}
                     onItemSelect={onItemSelect}

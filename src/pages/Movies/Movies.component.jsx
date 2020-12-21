@@ -4,7 +4,7 @@ import { getMovies } from "../../services/fakeMovieService"
 import Pagination from "../../components/Pagination/Pagination.component"
 import {paginate} from '../../components/Pagination/paginate.utils'
 import Genres from "../../components/Genres/Genres.component";
-import { getGenres } from "../../services/fakeGenreService"
+import { getGenres } from "../../services/genreService"
 import MovieTable from "../../components/MovieTable/MovieTabe.component"
 import SearchBox from "../../components/SearchBox/SearchBox.component"
 
@@ -58,17 +58,19 @@ class Movies extends Component {
       filtered = allMovies.filter(m=> 
         m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
         )
-    else if(currentGenre && currentGenre._id)
-        filtered = allMovies.filter(m => m.genre._id === currentGenre._id)
+    else if(currentGenre && currentGenre.id)
+        filtered = allMovies.filter(m => m.genre.id === currentGenre.id)
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
     const movies =  paginate(sorted, currentPage, pageSize)
     return {totalCount : filtered.length, data: movies}
   }
-  componentDidMount() {
+  async componentDidMount() {
+    const {data} = await getGenres()
+    const genres = [...data]
     this.setState({
       movies : getMovies(), 
-      genres : getGenres()  
+      genres 
     })
   }
 
