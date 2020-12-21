@@ -1,8 +1,8 @@
 import React from 'react'
 import Joi from 'joi-browser'
-import Form from '../Form/Form.component';
+import Form from '../../components/Form/Form.component';
 
-class RegisterForm extends Form {
+class Register extends Form {
     state = { 
         data : {
             name : '',
@@ -36,4 +36,4 @@ class RegisterForm extends Form {
     }
 }
  
-export default RegisterForm;
+export default Register;
