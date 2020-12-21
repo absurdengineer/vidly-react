@@ -1,12 +1,13 @@
 import React, { Component } from "react"
 import _ from 'lodash'
-import { getMovies } from "../../services/fakeMovieService"
+import { deleteMovie, getMovies } from "../../services/movieService"
 import Pagination from "../../components/Pagination/Pagination.component"
 import {paginate} from '../../components/Pagination/paginate.utils'
 import Genres from "../../components/Genres/Genres.component";
 import { getGenres } from "../../services/genreService"
 import MovieTable from "../../components/MovieTable/MovieTabe.component"
 import SearchBox from "../../components/SearchBox/SearchBox.component"
+import { toast } from "react-toastify"
 
 class Movies extends Component {
   state = {
@@ -19,9 +20,19 @@ class Movies extends Component {
     sortColumn : {path : 'title', order : 'asc'}
   };
 
-  handleDelete = movie => {
-    const movies = this.state.movies.filter(m => m._id !== movie._id)
+  handleDelete = async movie => {
+    const originalMovies = this.state.movies
+    const movies = originalMovies.filter(m => m.id !== movie.id)
     this.setState({ movies });
+    try{
+      await deleteMovie(movie.id)
+    }catch(ex){
+      if(ex.response && ex.response.status === 404)
+        toast.error('This Movie has already beeen deleted!!!')
+      if(ex.response && ex.response.status === 401)
+        toast.error('You\'re not authorized to delete the movie!!!')
+      this.setState({ movies : originalMovies });
+    }
   }
   handleLike = movie => {
     const movies = [...this.state.movies]
@@ -68,8 +79,9 @@ class Movies extends Component {
   async componentDidMount() {
     const {data} = await getGenres()
     const genres = [...data]
+    const {data : movies} = await getMovies()
     this.setState({
-      movies : getMovies(), 
+      movies,
       genres 
     })
   }
