@@ -69,8 +69,8 @@ class Movies extends Component {
       filtered = allMovies.filter(m=> 
         m.title.toLowerCase().startsWith(searchQuery.toLowerCase())
         )
-    else if(currentGenre && currentGenre.id)
-        filtered = allMovies.filter(m => m.genre.id === currentGenre.id)
+    else if(currentGenre)
+        filtered = allMovies.filter(m => m.genre_id === currentGenre)
 
     const sorted = _.orderBy(filtered, [sortColumn.path], [sortColumn.order])
     const movies =  paginate(sorted, currentPage, pageSize)

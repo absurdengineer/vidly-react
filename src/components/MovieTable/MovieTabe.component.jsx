@@ -7,9 +7,9 @@ import Table from '../Table/Table.component';
 class MovieTable extends Component {
     columns = [
         {path : 'title', label : 'Title', content : movie => <Link to={`/movies/${movie.id}`} >{movie.title}</Link>},
-        {path : 'genre.name', label : 'Genre'},
-        {path : 'numberInStock', label : 'Stock'},
-        {path : 'dailyRentalRate', label : 'Rate'},
+        {path : 'genre_id', label : 'Genre'},
+        {path : 'numberinstock', label : 'Stock'},
+        {path : 'dailyrentalrate', label : 'Rate'},
         {key : 'like', content : movie => <Like 
         liked={movie.liked}
         movie={movie}
