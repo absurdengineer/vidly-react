@@ -1,10 +1,10 @@
 import http from './httpService'
-const endPoint = 'http://127.0.0.1:8080/api/movies'
+import {apiUrl} from '../config.json'
 
 export function getMovies() {
-    return http.get(`${endPoint}`)
+    return http.get(`${apiUrl}/movies`)
 }
 
 export function deleteMovie(id) {
-    return http.delete(`${endPoint}/${id}`)
+    return http.delete(`${apiUrl}/movies/${id}`)
 }
