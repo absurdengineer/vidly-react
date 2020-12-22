@@ -17,6 +17,10 @@ const logout = () => {
     localStorage.removeItem(tokenKey)
 }
 
+const getJwt = () => {
+    return localStorage.getItem(tokenKey)
+}
+
 const getCurrentUser = () => {
     try {
         const jwt = localStorage.getItem(tokenKey)
@@ -29,5 +33,6 @@ const getCurrentUser = () => {
 export default {
     login,
     logout,
+    getJwt,
     getCurrentUser
 }
