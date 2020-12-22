@@ -29,8 +29,10 @@ class Movies extends Component {
     }catch(ex){
       if(ex.response && ex.response.status === 404)
         toast.error('This Movie has already beeen deleted!!!')
-      if(ex.response && ex.response.status === 401)
-        toast.error('You\'re not authorized to delete the movie!!!')
+      if(ex.response && ex.response.status === 400)
+        toast.error('Authentication Error : You need to login first to delete the movie!!!')
+      if(ex.response && ex.response.status === 403)
+        toast.error('Authorization Error : You\'re not authorized to delete the movie!!!')
       this.setState({ movies : originalMovies });
     }
   }

@@ -55,8 +55,8 @@ class MovieForm extends Form {
         try {
             await saveMovie(this.state.data)
         } catch (error) {
-            if(error.response)
-                return toast.error(error.response.data)         
+            if(error.response.status === 400)
+                return toast.error('Authentication Error : You need to login first to delete the movie!!!')     
         }
         this.props.history.push('/movies') 
     }
