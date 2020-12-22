@@ -2,7 +2,6 @@ import React from 'react'
 import Joi from 'joi-browser'
 import Form from '../../components/Form/Form.component';
 import { register } from '../../services/userService';
-import { toast } from 'react-toastify';
 
 class Register extends Form {
     state = { 
@@ -14,18 +13,14 @@ class Register extends Form {
         errors : {} 
     }
     schema = {
-        name : Joi.string().required().label('Full Name'),
+        name : Joi.string().min(2).required().label('Full Name'),
         username : Joi.string().email().required().label('Username'),
         password : Joi.string().min(5).required().label('Password')
     }
     
     async doSubmit() {
         try {
-            const {headers} = await register(this.state.data)
-            localStorage.setItem('token',headers['x-auth-token'])
-            this.setState({data : { name : '', username : '', password : '' }})
-            console.log('Submitted!!!!')
-            toast.success('User Created Successfully!!!')
+            await register(this.state.data)
             window.location = '/'
         } catch (error) {
           if(error.response && error.response.status === 400){

@@ -1,8 +1,7 @@
 import React from 'react'
 import Joi from 'joi-browser'
 import Form from '../../components/Form/Form.component';
-import { login } from '../../services/authService';
-import { toast } from 'react-toastify';
+import auth from '../../services/authService';
 
 class Login extends Form {
     state = { 
@@ -19,10 +18,7 @@ class Login extends Form {
     
     async doSubmit() {
         try {
-            const {data : jwt } = await login(this.state.data)
-            localStorage.setItem('token',jwt)
-            toast.success('Logged In Successfully')
-            this.setState({data : {username : '' , password : ''}})
+            await auth.login(this.state.data)
             window.location = '/'
         } catch (error) {
             if(error.response && error.response.status === 400){
