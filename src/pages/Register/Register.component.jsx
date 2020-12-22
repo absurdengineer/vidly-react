@@ -1,6 +1,8 @@
 import React from 'react'
 import Joi from 'joi-browser'
 import Form from '../../components/Form/Form.component';
+import { register } from '../../services/userService';
+import { toast } from 'react-toastify';
 
 class Register extends Form {
     state = { 
@@ -17,9 +19,19 @@ class Register extends Form {
         password : Joi.string().min(5).required().label('Password')
     }
     
-    doSubmit() {
-        this.setState({data : { name : '', username : '', password : '' }})
-        console.log('Submitted!!!!')
+    async doSubmit() {
+        try {
+            await register(this.state.data)
+            this.setState({data : { name : '', username : '', password : '' }})
+            console.log('Submitted!!!!')
+            toast.success('User Created Successfully!!!')
+        } catch (error) {
+          if(error.response && error.response.status === 400){
+                const errors = { ...this.state.errors }
+                errors.username = error.response.data
+                this.setState({errors})
+          }            
+        }
     }
     render() { 
         return ( 
