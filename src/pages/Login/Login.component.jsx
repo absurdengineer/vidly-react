@@ -19,9 +19,11 @@ class Login extends Form {
     
     async doSubmit() {
         try {
-            await login(this.state.data)
+            const {data : jwt } = await login(this.state.data)
+            localStorage.setItem('token',jwt)
             toast.success('Logged In Successfully')
-            this.setState({data : {username : '' }})
+            this.props.history.push('/')
+            this.setState({data : {username : '' , password : ''}})
         } catch (error) {
             if(error.response && error.response.status === 400){
                 const errors = {...this.state.errors}
@@ -29,7 +31,7 @@ class Login extends Form {
                 this.setState({errors})
             }
         }
-        this.setState({data : {password : '' }})
+        this.setState({data : {username : '' ,password : '' }})
     }
     render() { 
         return ( 
