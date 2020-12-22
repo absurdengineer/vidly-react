@@ -10,6 +10,7 @@ import Rental from './pages/Rental/Rental.page'
 import MovieForm from './components/MovieForm/MovieForm.component'
 import Login from './pages/Login/Login.component'
 import Register from './pages/Register/Register.component'
+import Logout from './components/Logout/Logout.component'
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
 
@@ -33,6 +34,7 @@ class App extends Component {
         <main className="container pt-5">
           <Switch>
             <Route path='/login' component={Login} />
+            <Route path='/logout' component={Logout} />
             <Route path='/register' component={Register} />
             <Route path='/movies/:id' component={MovieForm} />
             <Route path='/movies' component={Movies} />
