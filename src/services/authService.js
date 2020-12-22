@@ -30,6 +30,8 @@ const getCurrentUser = () => {
     }
 }
 
+http.setJwt(getJwt())
+
 export default {
     login,
     logout,
