@@ -89,9 +89,9 @@ class Movies extends Component {
   }
 
   render() {
-    const {history} = this.props
+    const {history,user} = this.props
     const { length: count } = this.state.movies
-    
+    console.log(user)
     if (!count) return <h4>There are no movies in the database.</h4>
     const {
       currentPage, 
@@ -113,7 +113,7 @@ class Movies extends Component {
           />
         </div>
         <div className="col">
-          <button className='btn btn-primary btn-lg' onClick={ () => history.push('/movies/new')}>New Movie</button>
+          { user && <button className='btn btn-primary btn-lg' onClick={ () => history.push('/movies/new')}>New Movie</button> }
           <SearchBox value={searchQuery} placeholder='Search by Title...' onChange={this.handleSearch} />
           <h4 className='mt-3'>Showing {totalCount} movies in the database.</h4>
           <MovieTable 
