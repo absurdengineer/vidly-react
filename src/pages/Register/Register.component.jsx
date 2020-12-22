@@ -21,10 +21,12 @@ class Register extends Form {
     
     async doSubmit() {
         try {
-            await register(this.state.data)
+            const {headers} = await register(this.state.data)
+            localStorage.setItem('token',headers['x-auth-token'])
             this.setState({data : { name : '', username : '', password : '' }})
             console.log('Submitted!!!!')
             toast.success('User Created Successfully!!!')
+            this.props.history.push('/')
         } catch (error) {
           if(error.response && error.response.status === 400){
                 const errors = { ...this.state.errors }
