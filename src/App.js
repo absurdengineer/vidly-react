@@ -13,6 +13,7 @@ import Logout from './components/Logout/Logout.component'
 import auth from './services/authService';
 import 'react-toastify/dist/ReactToastify.css'
 import './App.css'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute.component'
 
 class App extends Component {
   state = { }
@@ -33,14 +34,10 @@ class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/register' component={Register} />
-            <Route 
+            <ProtectedRoute 
               path='/movies/:id'
-              render={ props => {
-                    if(!user) return <Redirect to='/login' />
-                    return <MovieForm {...props}/>
-                  } 
-                }
-              />
+              component={MovieForm}
+            />
             <Route path='/movies' render={ props => <Movies user={user} {...props} />} />
             <Route path='/customers' component={Customer} />
             <Route path='/rentals' component={Rental} />
