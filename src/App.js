@@ -33,7 +33,14 @@ class App extends Component {
             <Route path='/login' component={Login} />
             <Route path='/logout' component={Logout} />
             <Route path='/register' component={Register} />
-            <Route path='/movies/:id' component={MovieForm} />
+            <Route 
+              path='/movies/:id'
+              render={ props => {
+                    if(!user) return <Redirect to='/login' />
+                    return <MovieForm {...props}/>
+                  } 
+                }
+              />
             <Route path='/movies' render={ props => <Movies user={user} {...props} />} />
             <Route path='/customers' component={Customer} />
             <Route path='/rentals' component={Rental} />
