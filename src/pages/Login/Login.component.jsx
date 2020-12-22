@@ -22,8 +22,8 @@ class Login extends Form {
             const {data : jwt } = await login(this.state.data)
             localStorage.setItem('token',jwt)
             toast.success('Logged In Successfully')
-            this.props.history.push('/')
             this.setState({data : {username : '' , password : ''}})
+            window.location = '/'
         } catch (error) {
             if(error.response && error.response.status === 400){
                 const errors = {...this.state.errors}
@@ -31,7 +31,6 @@ class Login extends Form {
                 this.setState({errors})
             }
         }
-        this.setState({data : {username : '' ,password : '' }})
     }
     render() { 
         return ( 

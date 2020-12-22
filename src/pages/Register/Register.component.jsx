@@ -26,7 +26,7 @@ class Register extends Form {
             this.setState({data : { name : '', username : '', password : '' }})
             console.log('Submitted!!!!')
             toast.success('User Created Successfully!!!')
-            this.props.history.push('/')
+            window.location = '/'
         } catch (error) {
           if(error.response && error.response.status === 400){
                 const errors = { ...this.state.errors }
